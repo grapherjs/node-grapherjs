@@ -23,11 +23,11 @@ export const setResponseData = async (res: Response) => {
 export const extractRequestData = async (req: Request, keys: string[] = []) => {
   const requestData: RequestData = {};
 
-  const body = await bodyParser(req);
+  // const body = await bodyParser(req);
   const headers = req.headers || req.header || {};
 
   requestData.headers = headers;
-  requestData.body = body;
+  requestData.body = req.body;
   requestData.host = req.hostname || req.host || "<no host>";
   requestData.ip = getClientIp(req) || "";
   requestData.method = req.method;
@@ -47,22 +47,6 @@ export const extractRequestData = async (req: Request, keys: string[] = []) => {
   });
 
   return requestData;
-};
-
-export const bodyParser = async (req: Request): Promise<Record<string, any>> => {
-  const chunks: any[] = [];
-
-  if (!req.body) {
-    return new Promise((resolve) => {
-      req.on("data", (chunk) => chunks.push(chunk));
-
-      req.on("end", () => {
-        resolve(JSON.parse(chunks.join("")));
-      });
-    });
-  }
-
-  return Promise.resolve(req.body);
 };
 
 export const extractErrorObject = (error: Error) => {
