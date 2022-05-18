@@ -1,5 +1,5 @@
 node_modules/
-dist
+
 .DS_Store
 .env
 .env.local
@@ -8,8 +8,7 @@ tsconfig.tsbuildinfo
 .pnp.js
 
 # testing
-test
-coverage
+/coverage
 
 # next.js
 /.next/
