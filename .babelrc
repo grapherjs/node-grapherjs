@@ -1,0 +1,33 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": "> 0.5%, not dead"
+      }
+    ],
+    "@babel/preset-typescript",
+    [
+      "minify",
+      {
+        "builtIns": false,
+        "evaluate": false,
+        "mangle": false
+      }
+    ]
+  ],
+  "comments": false,
+  "sourceMaps": false,
+  "plugins": [
+    [
+      "babel-plugin-tsconfig-paths",
+      {
+        "relative": true,
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "rootDir": ".",
+        "tsconfig": "tsconfig.json"
+      }
+    ],
+    "@babel/plugin-transform-runtime"
+  ]
+}

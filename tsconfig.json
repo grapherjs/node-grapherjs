@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "removeComments": true,
+    "sourceMap": false,
+    "declaration": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "target": "esnext",
+    "module": "commonjs",
+    "strict": true,
+    "noImplicitAny": false,
+    "strictPropertyInitialization": false,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": "./",
+    "typeRoots": ["./typings", "./node_modules/@types"],
+    "types": ["@types/jest"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/__tests__/*", "**/__e2e__/*"]
+}

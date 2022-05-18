@@ -1,0 +1,47 @@
+name: release
+
+on:
+  push:
+    paths-ignore:
+      - "CHANGELOG.md"
+    branches:
+      - main
+
+jobs:
+  release:
+    if: "!contains(github.event.commits[0].message, '[skip ci]')"
+    name: release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          token: ${{ secrets.SEMANTIC_RELEASE }}
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+
+      - name: Config CI Git user
+        run: |
+          git config user.name '@grapherjs-bot'
+          git config user.email 'admin@grapherjs.com'
+
+      - name: Install dependencies
+        run: |
+          yarn --frozen-lockfile
+
+      - name: Release and Publish
+        id: release
+        run: |
+          yarn run release -m "chore(release): %s [skip ci]"
+          yarn build
+          npm config set registry https://registry.npmjs.org
+          npm config set _authToken=$NPM_TOKEN
+          npm publish --access public ./dist
+          git push --follow-tags origin main
+        continue-on-error: false
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
