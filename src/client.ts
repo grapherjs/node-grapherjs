@@ -1,10 +1,9 @@
 import axios, { AxiosInstance } from "axios";
 import omit from "lodash.omit";
 import pick from "lodash.pick";
-import { ClientOptions, LogOptions, SearchResponse } from "./types";
+import { ClientOptions, LogOptions, SearchResponse, Level } from "./types";
 import { extractErrorObject, extractRequestData, setResponseData } from "./utils";
-import { Level } from "./types";
-import { NextFunction, Request, Response } from "express";
+import { json, NextFunction, Request, Response } from "express";
 
 export class Client {
   private axiosInstance: AxiosInstance;
@@ -99,51 +98,57 @@ export class Client {
   tracingHandler() {
     const self = this;
 
-    return async function async(req: Request, res: Response, next: NextFunction) {
-      setResponseData(res);
-      const requestData = await extractRequestData(req);
+    return async (req: Request, res: Response, next: NextFunction) => {
+      json()(req, res, async (err) => {
+        if (err) {
+          throw err;
+        }
 
-      res.once("finish", () => {
-        setImmediate(async () => {
-          const core = ["ip", "host", "method", "url"];
+        setResponseData(res);
+        const requestData = await extractRequestData(req);
 
-          const log: Record<string, any> = {
-            ...pick(requestData, core),
-            level: Level.DEBUG,
-            metadata: omit(requestData, core),
-          };
+        res.once("finish", () => {
+          setImmediate(async () => {
+            const core = ["ip", "host", "method", "url"];
 
-          if (res.locals.error) {
-            log.metadata.error = res.locals.error;
-            log.level = Level.ERROR;
-          }
-
-          if (res.locals.data) {
-            log.status_code = res.statusCode;
-            log.metadata.response = {
-              data: res.locals.data,
+            const log: Record<string, any> = {
+              ...pick(requestData, core),
+              level: Level.DEBUG,
+              metadata: omit(requestData, core),
             };
-          }
 
-          try {
-            const auth = await self.client();
-
-            if (!auth) {
-              new Error("Invalid token");
+            if (res.locals.error) {
+              log.metadata.error = res.locals.error;
+              log.level = Level.ERROR;
             }
 
-            const { access_token, type } = auth!;
+            if (res.locals.data) {
+              log.status_code = res.statusCode;
+              log.metadata.response = {
+                data: res.locals.data,
+              };
+            }
 
-            await self.axiosInstance.post("/v1/logs", log, {
-              headers: {
-                Authorization: `${type} ${access_token}`,
-              },
-            });
-          } catch (err) {}
+            try {
+              const auth = await self.client();
+
+              if (!auth) {
+                throw new Error("Invalid token");
+              }
+
+              const { access_token, type } = auth!;
+
+              await self.axiosInstance.post("/v1/logs", log, {
+                headers: {
+                  Authorization: `${type} ${access_token}`,
+                },
+              });
+            } catch (err) {}
+          });
         });
-      });
 
-      next();
+        next();
+      });
     };
   }
 
