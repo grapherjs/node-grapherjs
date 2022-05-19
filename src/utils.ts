@@ -14,6 +14,11 @@ export const setResponseData = async (res: Response) => {
 
   res.send = function (data: any) {
     res.send = oldSend;
+
+    if (!res.locals) {
+      res.locals = {};
+    }
+
     res.locals.data = data;
 
     return res.send(data);
