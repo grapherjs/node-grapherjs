@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://github.com/grapherjs/node-grapherjs/compare/v0.0.10...v0.0.11) (2022-05-24)
+
+
+### Bug Fixes
+
+* change api uri as well as logs return type ([5edc714](https://github.com/grapherjs/node-grapherjs/commit/5edc7149b5efcc37f306135ea6bbf2b5473c6577))
+
 ### [0.0.10](https://github.com/grapherjs/node-grapherjs/compare/v0.0.9...v0.0.10) (2022-05-19)
 
 
