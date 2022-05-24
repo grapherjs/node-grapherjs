@@ -12,7 +12,7 @@ export class Client {
   constructor(options: ClientOptions) {
     this.options = options;
     this.axiosInstance = axios.create({
-      baseURL: process.env.TEST_API_URL || "https://api.grapherjs.com/api",
+      baseURL: process.env.TEST_API_URL || "https://api.grapherjs.com",
     });
   }
 
@@ -20,7 +20,7 @@ export class Client {
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .post(
-          "/v1/token",
+          "/token",
           {},
           {
             headers: {
@@ -179,8 +179,8 @@ export class Client {
       return data;
     } catch (err: any) {
       return {
-        logs: [],
-        total: 0,
+        hits: [],
+        nbhits: 0,
       };
     }
   }

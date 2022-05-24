@@ -15,8 +15,8 @@ export type ClientOptions = {
 };
 
 export type SearchResponse = {
-  logs: Partial<Core>[];
-  total: number;
+  hits: Partial<Core>[];
+  nbhits: number;
 };
 
 export type Core = {

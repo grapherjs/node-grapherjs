@@ -95,7 +95,7 @@ it("can search a log event", async () => {
 
   const results = await client1.search("200");
 
-  expect(results.total).toBeGreaterThan(0);
+  expect(results.hits).toBeGreaterThan(0);
 });
 
 it("cannot search a log from different application_id", async () => {
@@ -103,8 +103,8 @@ it("cannot search a log from different application_id", async () => {
 
   expect(results).toEqual(
     expect.objectContaining({
-      logs: [],
-      total: 0,
+      hits: [],
+      nbhits: 0,
     })
   );
 });
