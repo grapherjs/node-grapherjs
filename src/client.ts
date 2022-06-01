@@ -115,7 +115,7 @@ export class Client {
     });
   }
 
-  async tracingHandler() {
+  tracingHandler() {
     const self = this;
 
     return async (req: Request, res: Response, next: NextFunction) => {
