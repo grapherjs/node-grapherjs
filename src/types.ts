@@ -12,6 +12,11 @@ export enum Level {
 export type ClientOptions = {
   client_id: string;
   client_secret: string;
+  health_checks?: {
+    protocol: string;
+    host: string;
+    port: number;
+  }[];
 };
 
 export type SearchResponse = {
