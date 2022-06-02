@@ -2308,13 +2308,6 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-event-loop-stats@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/event-loop-stats/-/event-loop-stats-1.4.1.tgz#ab3f5e1a99f22d25a3a44e2294ed69a05ce586b7"
-  integrity sha512-Wzohoz1JrQOBjt/shh5Z3/8Ti6SVoGl5nyX952Vcp5N56QVOtjPuJsQa+dEhsDJHu4QAFz45ePXRFq01skb9xA==
-  dependencies:
-    nan "^2.14.0"
-
 execa@^5.0.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/execa/-/execa-5.1.1.tgz#f80ad9cbf4298f7bd1d4c9555c21e93741c411dd"
@@ -4184,11 +4177,6 @@ mylas@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/mylas/-/mylas-2.1.9.tgz#8329626f95c0ce522ca7d3c192eca6221d172cdc"
   integrity sha512-pa+cQvmhoM8zzgitPYZErmDt9EdTNVnXsH1XFjMeM4TyG4FFcgxrvK1+jwabVFwUOEDaSWuXBMjg43kqt/Ydlg==
-
-nan@^2.14.0:
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.15.0.tgz#3f34a473ff18e15c1b5626b62903b5ad6e665fee"
-  integrity sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ==
 
 natural-compare@^1.4.0:
   version "1.4.0"

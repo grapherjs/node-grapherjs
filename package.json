@@ -20,7 +20,6 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
-    "event-loop-stats": "^1.4.1",
     "express": "^4.18.1",
     "jwt-decode": "^3.1.2",
     "lodash.isempty": "^4.4.0",
