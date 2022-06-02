@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.15](https://github.com/grapherjs/node-grapherjs/compare/v0.0.14...v0.0.15) (2022-06-02)
+
+
+### Bug Fixes
+
+* ignore dist ([0752850](https://github.com/grapherjs/node-grapherjs/commit/07528503d29453b81cee5dd1999dec1240af2906))
+* remove event-loop-stats ([81a8007](https://github.com/grapherjs/node-grapherjs/commit/81a800754842f90d678e5af66c98d5d7ea2702bb))
+
 ### [0.0.14](https://github.com/grapherjs/node-grapherjs/compare/v0.0.13...v0.0.14) (2022-06-02)
 
 
