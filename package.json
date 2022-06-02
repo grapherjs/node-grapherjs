@@ -42,6 +42,7 @@
     "@types/lodash.isempty": "^4.4.7",
     "@types/lodash.omit": "^4.5.7",
     "@types/lodash.pick": "^4.4.7",
+    "@types/pidusage": "^2.0.2",
     "@types/request-ip": "^0.0.37",
     "@types/supertest": "^2.0.12",
     "@types/ua-parser-js": "^0.7.36",

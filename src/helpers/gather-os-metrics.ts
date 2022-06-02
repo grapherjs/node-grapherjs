@@ -1,7 +1,7 @@
 import eventLoopStats from "event-loop-stats";
 import os from "os";
 import pidusage from "pidusage";
-import sendMetrics from "./send.metrics";
+import sendMetrics from "./send-metrics";
 import v8 from "v8";
 import { Config } from "./default-config";
 import { Socket } from "socket.io-client";
@@ -17,7 +17,7 @@ export default function gatherOsMetrics(io: Socket, span: Config["spans"][0]) {
     timestamp: Date.now(),
   };
 
-  pidusage(process.pid, (err, stat) => {
+  pidusage(process.pid, (err, stat: any) => {
     if (err) {
       return;
     }
@@ -33,7 +33,7 @@ export default function gatherOsMetrics(io: Socket, span: Config["spans"][0]) {
 
     span.os.push(stat);
 
-    if (!span.responses[0] || (last.timestamp + span.interval) * 1000 < Date.now()) {
+    if (!span.responses[0] || last.timestamp + span.interval < Date.now()) {
       span.responses.push(defaultResponse);
     }
 
