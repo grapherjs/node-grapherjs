@@ -1,4 +1,3 @@
-import eventLoopStats from "event-loop-stats";
 import os from "os";
 import pidusage from "pidusage";
 import sendMetrics from "./send-metrics";
@@ -29,7 +28,6 @@ export default function gatherOsMetrics(io: Socket, span: Config["spans"][0]) {
     stat.load = os.loadavg();
     stat.timestamp = Date.now();
     stat.heap = v8.getHeapStatistics();
-    stat.loop = eventLoopStats.sense();
 
     span.os.push(stat);
 
