@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.14](https://github.com/grapherjs/node-grapherjs/compare/v0.0.13...v0.0.14) (2022-06-02)
+
+
+### Bug Fixes
+
+* fix emitting data structure ([0f6f01b](https://github.com/grapherjs/node-grapherjs/commit/0f6f01b8377f75483ac80729eb7f7dd61dd45326))
+
 ### [0.0.13](https://github.com/grapherjs/node-grapherjs/compare/v0.0.12...v0.0.13) (2022-06-01)
 
 
