@@ -1,6 +1,5 @@
 import axios, { AxiosInstance } from "axios";
 import defaultConifg from "./helpers/default-config";
-import jwt_decode from "jwt-decode";
 import omit from "lodash.omit";
 import pick from "lodash.pick";
 import socketInit from "./helpers/socket-init";
@@ -12,8 +11,6 @@ export class Client {
   private axiosInstance: AxiosInstance;
   private options: ClientOptions;
 
-  public auth: { access_token: string; type: string };
-
   constructor(options: ClientOptions) {
     this.options = options;
     this.axiosInstance = axios.create({
@@ -21,7 +18,7 @@ export class Client {
     });
   }
 
-  private async token(): Promise<typeof this.auth> {
+  async client(): Promise<{ access_token: string; type: string } | null> {
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .post(
@@ -36,27 +33,10 @@ export class Client {
           }
         )
         .then(({ data }) => {
-          this.auth = data;
           resolve(data);
         })
         .catch(reject);
     });
-  }
-
-  async client() {
-    if (!this.auth?.access_token) {
-      return this.token();
-    }
-
-    try {
-      const decoded = jwt_decode(this.auth.access_token) as any;
-
-      if (decoded <= Date.now()) {
-        return Promise.resolve(this.auth);
-      }
-    } catch {
-      return this.token();
-    }
   }
 
   async log(
@@ -65,12 +45,6 @@ export class Client {
     { data, level = Level.DEBUG, tags }: LogOptions,
     cb?: (data?: any, error?: Error) => any
   ) {
-    try {
-      await this.client();
-    } catch (err: any) {
-      return cb?.(undefined, err);
-    }
-
     setResponseData(res);
 
     const requestData = await extractRequestData(req);
@@ -101,9 +75,17 @@ export class Client {
         }
 
         try {
+          const auth = await this.client();
+
+          if (!auth) {
+            cb?.(undefined, new Error("Invalid token"));
+          }
+
+          const { access_token, type } = auth!;
+
           const { data } = await this.axiosInstance.post("/v1/logs", log, {
             headers: {
-              Authorization: `${this.auth!.type} ${this.auth!.access_token}`,
+              Authorization: `${type} ${access_token}`,
             },
           });
 
@@ -124,17 +106,23 @@ export class Client {
           throw err;
         }
 
+        let auth: { access_token: string; type: string } | null = null;
+
         try {
-          await this.client();
-        } catch {
-          return next();
-        }
+          auth = await self.client();
+
+          if (!auth) {
+            throw new Error("Invalid token");
+          }
+        } catch (err) {}
+
+        const { access_token, type } = auth!;
 
         setResponseData(res);
         const requestData = await extractRequestData(req);
 
         // ************* APM *************
-        socketInit(this.auth?.access_token!);
+        socketInit(access_token);
         const startTime = process.hrtime();
         // *******************************
 
@@ -187,11 +175,10 @@ export class Client {
             try {
               await self.axiosInstance.post("/v1/logs", log, {
                 headers: {
-                  Authorization: `${self.auth!.type} ${self.auth!.access_token}`,
+                  Authorization: `${type} ${access_token}`,
                 },
               });
             } catch (err: any) {
-              console.log(err);
               console.log(err?.response?.data.errors);
             }
           });
@@ -212,11 +199,17 @@ export class Client {
 
   async search(q: string): Promise<SearchResponse> {
     try {
-      await this.client();
+      const auth = await this.client();
+
+      if (!auth) {
+        throw new Error("Invalid token");
+      }
+
+      const { access_token, type } = auth!;
 
       const { data } = await this.axiosInstance.get(`/v1/logs?q=${q}`, {
         headers: {
-          Authorization: `${this.auth!.type} ${this.auth!.access_token}`,
+          Authorization: `${type} ${access_token}`,
         },
       });
 
