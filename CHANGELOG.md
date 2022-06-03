@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.17](https://github.com/grapherjs/node-grapherjs/compare/v0.0.16...v0.0.17) (2022-06-03)
+
+
+### Bug Fixes
+
+* fix bearer token issue ([6b84299](https://github.com/grapherjs/node-grapherjs/commit/6b8429961ff6da16a380837a2e092132afd03537))
+
 ### [0.0.16](https://github.com/grapherjs/node-grapherjs/compare/v0.0.15...v0.0.16) (2022-06-03)
 
 
