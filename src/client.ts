@@ -184,11 +184,16 @@ export class Client {
               }
             });
 
-            await self.axiosInstance.post("/v1/logs", log, {
-              headers: {
-                Authorization: `${self.auth!.type} ${self.auth!.access_token}`,
-              },
-            });
+            try {
+              await self.axiosInstance.post("/v1/logs", log, {
+                headers: {
+                  Authorization: `${self.auth!.type} ${self.auth!.access_token}`,
+                },
+              });
+            } catch (err: any) {
+              console.log(err);
+              console.log(err?.response?.data.errors);
+            }
           });
         });
 

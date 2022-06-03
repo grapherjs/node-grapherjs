@@ -19,7 +19,6 @@ export type Config = {
         total_physical_size: number;
         used_heap_size: number;
       };
-      loop: number;
     }>;
     responses: Array<{
       timestamp: number;
