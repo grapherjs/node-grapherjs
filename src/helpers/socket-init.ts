@@ -15,6 +15,9 @@ export default function socketInit(token: string) {
     });
 
     socket.on("connect", () => {});
+    socket.on("disconnect", () => {
+      //
+    });
 
     config.spans.forEach((span) => {
       const interval = setInterval(() => gatherOsMetrics(socket, span), span.interval * 1000);

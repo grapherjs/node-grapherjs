@@ -1,7 +1,8 @@
-import "dotenv/config";
 import Client from "../src/index";
 import express, { NextFunction, Request, Response } from "express";
 import request from "supertest";
+import { Level } from "../src/types";
+import "dotenv/config";
 
 const client1 = new Client({
   client_id: process.env.FIRST_CLIENT_ID || "",
@@ -80,26 +81,47 @@ it("should creates a custom log data", async () => {
   await request(app).post("/").send({}).expect(200);
 });
 
-it("can search a log event", async () => {
+it("should creates a custom log data using record function", async () => {
   const app = express();
 
-  app.post("/", async (req, res) => {
-    await client1.log(req, res, { data: "save client" }, (data) => {
-      expect(data).toBeDefined();
-    });
+  app.post("/", async (_, res) => {
+    await client1.record(
+      { data: "custom log data", tags: ["record"], level: Level.DEBUG },
+      (data) => {
+        expect(typeof data.metadata).toBe("string");
+        expect(data.tags).toEqual(["record"]);
+        expect(data.level).toBe("DEBUG");
+        expect(typeof data.timestamp).toBe("number");
+      }
+    );
 
     res.sendStatus(200);
   });
 
   await request(app).post("/").send({}).expect(200);
+});
 
-  const results = await client1.search("200");
+it("can search a log event", async () => {
+  const app = express();
 
-  expect(results.hits).toBeGreaterThan(0);
+  app.post("/", async (req, res) => {
+    await client1.log(req, res, { data: "dummy" }, (data) => {
+      expect(data).toBeDefined();
+    });
+
+    const result = await client1.search("dummy");
+
+    expect(result.nbhits).toBeGreaterThan(0);
+    expect(result.hits[0]?.metadata?.data).toBe("dummy");
+
+    res.sendStatus(200);
+  });
+
+  await request(app).post("/").send({}).expect(200);
 });
 
 it("cannot search a log from different application_id", async () => {
-  const results = await client2.search("200");
+  const results = await client2.search("dummy");
 
   expect(results).toEqual(
     expect.objectContaining({

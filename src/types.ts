@@ -67,3 +67,12 @@ export type LogOptions = {
   level?: Level;
   tags?: string[];
 };
+
+export type SearchOptions = {
+  query: string;
+  take?: number;
+  skip?: number;
+  field?: string;
+  from?: Date;
+  until?: Date;
+};
