@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.18](https://github.com/grapherjs/node-grapherjs/compare/v0.0.17...v0.0.18) (2022-07-05)
+
+
+### Features
+
+* add record function for custom logging ([0d98625](https://github.com/grapherjs/node-grapherjs/commit/0d986259522985d981c92ff8ae4ba2a0dafe1427))
+
 ### [0.0.17](https://github.com/grapherjs/node-grapherjs/compare/v0.0.16...v0.0.17) (2022-06-03)
 
 
