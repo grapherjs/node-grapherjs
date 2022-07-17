@@ -32,6 +32,7 @@ export type Core = {
   level: Level;
   tags: string[];
   metadata: Metadata;
+  response_time: number;
 };
 
 export interface Metadata extends StrictMetadata {
