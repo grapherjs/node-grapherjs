@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.19](https://github.com/grapherjs/node-grapherjs/compare/v0.0.18...v0.0.19) (2022-07-17)
+
+
+### Features
+
+* add response_time ([d4eb519](https://github.com/grapherjs/node-grapherjs/commit/d4eb5194030f30e950883f76c088fa5df0ba46d4))
+
 ### [0.0.18](https://github.com/grapherjs/node-grapherjs/compare/v0.0.17...v0.0.18) (2022-07-05)
 
 
