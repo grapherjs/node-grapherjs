@@ -78,6 +78,8 @@ export class Client {
 
     const requestData = await extractRequestData(req);
 
+    const startTime = process.hrtime();
+
     res.once("finish", () => {
       setImmediate(async () => {
         const core = ["ip", "host", "method", "url"];
@@ -90,6 +92,9 @@ export class Client {
         };
 
         log.metadata.data = data;
+        const diff = process.hrtime(startTime);
+        const responseTime = (diff[0] * 1e3 + diff[1]) * 1e-6;
+        log.response_time = responseTime;
 
         if (res.locals.error) {
           log.metadata.error = res.locals.error;
@@ -178,6 +183,8 @@ export class Client {
               const responseTime = (diff[0] * 1e3 + diff[1]) * 1e-6;
               const category = Math.floor(res.statusCode / 100);
 
+              log.response_time = responseTime;
+
               defaultConifg.spans.forEach((span) => {
                 const last = span.responses[span.responses.length - 1];
 
@@ -214,6 +221,8 @@ export class Client {
           });
         } catch (err) {
           console.log(err);
+          // todo
+          // log to the diagnostic server
         }
 
         next();
