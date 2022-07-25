@@ -5,7 +5,7 @@ import v8 from "v8";
 import { Config } from "./default-config";
 import { Socket } from "socket.io-client";
 
-export default function gatherOsMetrics(io: Socket, span: Config["spans"][0]) {
+export default function gatherOsMetrics(io: Socket | null, span: Config["spans"][0]) {
   const defaultResponse = {
     2: 0,
     3: 0,
