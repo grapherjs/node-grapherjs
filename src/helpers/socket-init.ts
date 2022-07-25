@@ -2,7 +2,7 @@ import config from "./default-config";
 import gatherOsMetrics from "./gather-os-metrics";
 import { io, Socket } from "socket.io-client";
 
-let socket: Socket;
+let socket: Socket | null;
 
 export default function socketInit(token: string) {
   if (!token) return;
@@ -16,7 +16,7 @@ export default function socketInit(token: string) {
 
     socket.on("connect", () => {});
     socket.on("disconnect", () => {
-      //
+      socket = null;
     });
 
     config.spans.forEach((span) => {
